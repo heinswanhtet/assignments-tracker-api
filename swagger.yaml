@@ -4,7 +4,7 @@ info:
   contact: {}
   version: '1.0'
 servers:
-- url: http://localhost:3000/api/v1
+- url: https://assignments-tracker-api.onrender.com
   variables: {}
 paths:
   /auth/register:
