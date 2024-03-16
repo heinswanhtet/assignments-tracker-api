@@ -1,3 +1,7 @@
+const Assignment = require('../models/Assignment')
+const { StatusCodes } = require('http-status-codes')
+const { BadRequestError, NotFoundError } = require('../errors')
+
 const getAllAssignments = async (req, res) => {
     res.send('Get all assignments')
 }
