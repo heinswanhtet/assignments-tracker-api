@@ -15,6 +15,8 @@ const assignmentsRouter = require('./routes/assignments')
 const notFoundMiddleware = require('./middleware/not-found')
 const errorHandlerMiddleWare = require('./middleware/error-handler')
 
+app.use(express.json())
+
 app.get('/', (req, res) => res.send('Welcome! This is the assignments tracker.'))
 
 app.use('/api/v1/auth', authRouter)
