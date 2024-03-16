@@ -22,6 +22,12 @@ const notFoundMiddleware = require('./middleware/not-found')
 const errorHandlerMiddleWare = require('./middleware/error-handler')
 const authenticateUser = require('./middleware/authentication')
 
+// Swagger
+const swaggerUI = require('swagger-ui-express')
+const YAML = require('yamljs')
+const swaggerDocument = YAML.load('./swagger.yaml')
+// const swaggerDocument = require('./swagger.json')
+
 app.use(
     rateLimiter({
         windowMs: 15 * 60 * 1000,
@@ -34,7 +40,10 @@ app.use(cors())
 
 app.use(express.json())
 
-app.get('/', (req, res) => res.send('<h1>Welcome! This is the assignments tracker.</h1>'))
+app.get('/', (req, res) => {
+    res.send('<h1>Assignments Tracker API</h1><a href="/api-docs">Documentation</a>')
+})
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument))
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/assignments', authenticateUser, assignmentsRouter)

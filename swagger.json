@@ -1,0 +1,379 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "assignments-tracker-api",
+    "contact": {},
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "variables": {}
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register user",
+        "operationId": "Registeruser",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/RegisteruserRequest"
+                  },
+                  {
+                    "example": {
+                      "name": "robin",
+                      "email": "robin@gmail.com",
+                      "password": "thisisstrongpassword"
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "name": "robin",
+                "email": "robin@gmail.com",
+                "password": "thisisstrongpassword"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": []
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login",
+        "operationId": "Login",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/LoginRequest"
+                  },
+                  {
+                    "example": {
+                      "email": "luffy@gmail.com",
+                      "password": "thisisstrongpassword"
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "email": "luffy@gmail.com",
+                "password": "thisisstrongpassword"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": []
+      }
+    },
+    "/assignments": {
+      "get": {
+        "tags": [
+          "Assignments"
+        ],
+        "summary": "Get all assignments",
+        "operationId": "Getallassignments",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Assignments"
+        ],
+        "summary": "Create an assignment",
+        "operationId": "Createanassignment",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CreateanassignmentRequest"
+                  },
+                  {
+                    "example": {
+                      "title": "test",
+                      "subject": "random",
+                      "instructor": "poppy"
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "title": "test",
+                "subject": "random",
+                "instructor": "poppy"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/assignments/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "string"
+          },
+          "required": true,
+          "description": "the assignment id"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Assignments"
+        ],
+        "summary": "Get a single assignment",
+        "operationId": "Getasingleassignment",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Assignments"
+        ],
+        "summary": "Update the assignment",
+        "operationId": "Updatetheassignment",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UpdatetheassignmentRequest"
+                  },
+                  {
+                    "example": {
+                      "instructor": "Bob"
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "instructor": "Bob"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Assignments"
+        ],
+        "summary": "Delete the assignment",
+        "operationId": "Deletetheassignment",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegisteruserRequest": {
+        "title": "RegisteruserRequest",
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "robin",
+          "email": "robin@gmail.com",
+          "password": "thisisstrongpassword"
+        }
+      },
+      "LoginRequest": {
+        "title": "LoginRequest",
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "email": "luffy@gmail.com",
+          "password": "thisisstrongpassword"
+        }
+      },
+      "CreateanassignmentRequest": {
+        "title": "CreateanassignmentRequest",
+        "required": [
+          "title",
+          "subject",
+          "instructor"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "instructor": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "title": "test",
+          "subject": "random",
+          "instructor": "poppy"
+        }
+      },
+      "UpdatetheassignmentRequest": {
+        "title": "UpdatetheassignmentRequest",
+        "required": [
+          "instructor"
+        ],
+        "type": "object",
+        "properties": {
+          "instructor": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "instructor": "Bob"
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [],
+  "tags": [
+    {
+      "name": "Misc",
+      "description": ""
+    },
+    {
+      "name": "Auth",
+      "description": ""
+    },
+    {
+      "name": "Assignments",
+      "description": ""
+    }
+  ]
+}
