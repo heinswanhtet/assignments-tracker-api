@@ -11,7 +11,9 @@ const getAssignment = async (req, res) => {
 }
 
 const createAssignment = async (req, res) => {
-    res.send('Create an assignment')
+    console.log(req.user)
+    res.send('hi')
+
 }
 
 const updateAssignment = async (req, res) => {
