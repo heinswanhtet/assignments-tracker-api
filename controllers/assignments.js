@@ -32,7 +32,27 @@ const createAssignment = async (req, res) => {
 }
 
 const updateAssignment = async (req, res) => {
-    res.send('Update the assignment')
+    const {
+        user: { userId },
+        params: { id: assignmentId },
+        body: { title, subject, instructor }
+    } = req
+
+    if (!(title || subject || instructor)) {
+        throw new BadRequestError('title or subject or instructor: at least one field must be provided')
+    }
+
+    const assignment = await Assignment.findByIdAndUpdate(
+        { _id: assignmentId, createdBy: userId },
+        req.body,
+        { new: true, runValidators: true }
+    )
+
+    if (!assignment) {
+        throw new NotFoundError(`No job with id: ${assignmentId}`)
+    }
+
+    res.status(StatusCodes.OK).json({ assignment })
 }
 
 const deleteAssignment = async (req, res) => {
