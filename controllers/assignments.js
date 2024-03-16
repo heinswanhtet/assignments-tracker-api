@@ -11,9 +11,9 @@ const getAssignment = async (req, res) => {
 }
 
 const createAssignment = async (req, res) => {
-    console.log(req.user)
-    res.send('hi')
-
+    req.body.createdBy = req.user.userId
+    const assignment = await Assignment.create(req.body)
+    res.status(StatusCodes.CREATED).json({ assignment })
 }
 
 const updateAssignment = async (req, res) => {
