@@ -28,6 +28,7 @@ const YAML = require('yamljs')
 const swaggerDocument = YAML.load('./swagger.yaml')
 // const swaggerDocument = require('./swagger.json')
 
+app.set('trust proxy', 1)
 app.use(
     rateLimiter({
         windowMs: 15 * 60 * 1000,
