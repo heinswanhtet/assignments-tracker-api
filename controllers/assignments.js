@@ -3,7 +3,8 @@ const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
 
 const getAllAssignments = async (req, res) => {
-    res.send('Get all assignments')
+    const assignments = await Assignment.find({ createdBy: req.user.userId }).sort('createdAt')
+    res.status(StatusCodes.OK).json({ total: assignments.length, assignments })
 }
 
 const getAssignment = async (req, res) => {
