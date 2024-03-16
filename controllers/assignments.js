@@ -56,7 +56,17 @@ const updateAssignment = async (req, res) => {
 }
 
 const deleteAssignment = async (req, res) => {
-    res.send('Delete the assignment')
+    const {
+        user: { userId },
+        params: { id: assignmentId }
+    } = req
+
+    const assignment = await Assignment.findByIdAndDelete({ _id: assignmentId, createdBy: userId })
+    if (!assignment) {
+        throw new NotFoundError(`No job with id: ${assignmentId}`)
+    }
+
+    res.status(StatusCodes.OK).send()
 }
 
 module.exports = {
