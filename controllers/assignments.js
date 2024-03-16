@@ -8,7 +8,21 @@ const getAllAssignments = async (req, res) => {
 }
 
 const getAssignment = async (req, res) => {
-    res.send('Get a single assignment')
+    const {
+        user: { userId },
+        params: { id: assignmentId }
+    } = req
+
+    const assignment = await Assignment.findById({
+        _id: assignmentId,
+        createdBy: userId
+    })
+
+    if (!assignment) {
+        throw new NotFoundError(`No job with id: ${assignmentId}`)
+    }
+
+    res.status(StatusCodes.OK).json({ assignment })
 }
 
 const createAssignment = async (req, res) => {
