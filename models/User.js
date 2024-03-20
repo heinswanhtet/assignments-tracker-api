@@ -22,10 +22,17 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide password'],
         minlength: 6
+    },
+    university: {
+        type: String,
+        trim: true,
+        maxlength: 50,
+        default: 'my university'
     }
 })
 
 UserSchema.pre('save', async function () {
+    if (!this.isModified('password')) return
     const salt = await bcrypt.genSalt(10)
     this.password = await bcrypt.hash(this.password, salt)
 })
