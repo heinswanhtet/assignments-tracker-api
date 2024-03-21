@@ -31,7 +31,7 @@ const login = async (req, res) => {
 const updateUser = async (req, res) => {
     const { name, email, university } = req.body
 
-    if (!(name || email || university)) {
+    if (!name || !email || !university) {
         throw new BadRequestError('Please provide required values')
     }
 
