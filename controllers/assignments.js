@@ -1,7 +1,6 @@
 const Assignment = require('../models/Assignment')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError, PermissionDeniedError } = require('../errors')
-const mongoose = require('mongoose')
 
 const getAllAssignments = async (req, res) => {
     const { title, subject, instructor, status, sort } = req.query
