@@ -1,6 +1,7 @@
 const Assignment = require('../models/Assignment')
 const { StatusCodes } = require('http-status-codes')
-const { BadRequestError, NotFoundError } = require('../errors')
+const { BadRequestError, NotFoundError, PermissionDeniedError } = require('../errors')
+const mongoose = require('mongoose')
 
 const getAllAssignments = async (req, res) => {
     const { title, subject, instructor, status, sort } = req.query
@@ -98,15 +99,23 @@ const updateAssignment = async (req, res) => {
         throw new BadRequestError('title or subject or instructor: at least one field must be provided')
     }
 
-    const assignment = await Assignment.findByIdAndUpdate(
-        { _id: assignmentId, createdBy: userId },
-        req.body,
-        { new: true, runValidators: true }
+    let assignment = await Assignment.findById(
+        { _id: assignmentId }
     )
 
     if (!assignment) {
         throw new NotFoundError(`No job with id: ${assignmentId}`)
     }
+
+    if (assignment.createdBy.toString() !== userId) {
+        throw new PermissionDeniedError(`You do not have the right to access the assignment id: ${assignmentId}`)
+    }
+
+    assignment = await Assignment.findByIdAndUpdate(
+        { _id: assignmentId },
+        req.body,
+        { new: true, runValidators: true }
+    )
 
     res.status(StatusCodes.OK).json({ assignment })
 }
@@ -117,7 +126,19 @@ const deleteAssignment = async (req, res) => {
         params: { id: assignmentId }
     } = req
 
-    const assignment = await Assignment.findByIdAndDelete({ _id: assignmentId, createdBy: userId })
+    let assignment = await Assignment.findById(
+        { _id: assignmentId }
+    )
+
+    if (!assignment) {
+        throw new NotFoundError(`No job with id: ${assignmentId}`)
+    }
+
+    if (assignment.createdBy.toString() !== userId) {
+        throw new PermissionDeniedError(`You do not have the right to access the assignment id: ${assignmentId}`)
+    }
+
+    assignment = await Assignment.findByIdAndDelete({ _id: assignmentId })
     if (!assignment) {
         throw new NotFoundError(`No job with id: ${assignmentId}`)
     }
