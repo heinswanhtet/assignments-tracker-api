@@ -8,7 +8,6 @@ const app = express()
 const helmet = require('helmet')
 const cors = require('cors')
 const xss = require('xss-clean')
-const rateLimiter = require('express-rate-limit')
 
 // database
 const connectDB = require('./db/connection')
@@ -29,12 +28,6 @@ const swaggerDocument = YAML.load('./swagger.yaml')
 // const swaggerDocument = require('./swagger.json')
 
 app.set('trust proxy', 1)
-app.use(
-    rateLimiter({
-        windowMs: 15 * 60 * 1000,
-        max: 60
-    })
-)
 app.use(helmet())
 app.use(xss())
 app.use(cors())
