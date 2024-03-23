@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const testUser = require('../middleware/test-user')
 
 const {
     getAllAssignments,
@@ -9,7 +10,7 @@ const {
     deleteAssignment
 } = require('../controllers/assignments')
 
-router.route('/').get(getAllAssignments).post(createAssignment)
-router.route('/:id').get(getAssignment).patch(updateAssignment).delete(deleteAssignment)
+router.route('/').get(getAllAssignments).post(testUser, createAssignment)
+router.route('/:id').get(getAssignment).patch(testUser, updateAssignment).delete(testUser, deleteAssignment)
 
 module.exports = router
