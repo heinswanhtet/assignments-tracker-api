@@ -7,10 +7,12 @@ const {
     getAssignment,
     createAssignment,
     updateAssignment,
-    deleteAssignment
+    deleteAssignment,
+    showStats
 } = require('../controllers/assignments')
 
 router.route('/').get(getAllAssignments).post(testUser, createAssignment)
 router.route('/:id').get(getAssignment).patch(testUser, updateAssignment).delete(testUser, deleteAssignment)
+router.route('/stats/:property').get(showStats)
 
 module.exports = router
