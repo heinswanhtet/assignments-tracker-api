@@ -174,10 +174,7 @@ const showStats = async (req, res) => {
         stats['hiatus'] = groupedStats['hiatus'] || 0
         stats['finished'] = groupedStats['finished'] || 0
     }
-    else if (property === 'subject') {
-        stats = await aggregateProperty(property, req.user.userId)
-    }
-    else if (property === 'instructor') {
+    else if (property === 'subject' || property === 'instructor') {
         stats = await aggregateProperty(property, req.user.userId)
     }
     else if (property === 'monthly') {
